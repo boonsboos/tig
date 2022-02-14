@@ -18,7 +18,7 @@ VIG [option](=value)
 pub struct VigOptions {
 pub mut:
 	autosave_interval	int = 30
-	daemonize			bool = true
+	daemonize           bool = true
 }
 
 fn init() {
@@ -26,7 +26,7 @@ fn init() {
 }
 
 
-pub fn parse_args() VigOptions {
+fn parse_args() VigOptions {
 
 	mut options := VigOptions{}
 
