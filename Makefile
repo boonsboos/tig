@@ -1,8 +1,10 @@
+FLAGS := -skip-unused -enable-globals
+
 build-windows:
-	v -prod -skip-unused -enable-globals -os windows .
+	v -prod $(FLAGS) -os windows .
 
 test-windows:
-	v -skip-unused -enable-globals .
+	v $(FLAGS) -os windows .
 
 build-linux:
-	v -prod -skip-unused -enable-globals -compress .
+	v -prod $(FLAGS) -compress .

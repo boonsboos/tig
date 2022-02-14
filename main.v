@@ -1,11 +1,18 @@
 module main
 
-import util
+import time
 
-__global options = util.parse_args()
+import util
 
 fn main() {
 	println(options)
+
 	// autosave thread
-	// game thread	
+	go util.autosave_thread()
+
+	// game thread
+	for {
+		println('game')
+		time.sleep(options.autosave_interval*util.a_second)
+	}
 }
