@@ -1,8 +1,11 @@
 module main
 
-fn main() {
-	println('hello world')
+import util
 
+__global options = util.parse_args()
+
+fn main() {
+	println(options)
 	// autosave thread
 	// game thread	
 }
