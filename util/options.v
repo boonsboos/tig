@@ -1,6 +1,7 @@
 module util
 
 import os
+import toml
 
 __global options VigOptions
 
@@ -22,7 +23,8 @@ pub mut:
 }
 
 fn init() {
-	options = parse_args()
+	options = parse_settings()
+	options = parse_args() // commandline args have higher priority
 }
 
 
@@ -91,8 +93,27 @@ fn usage() {
 	println(help)
 }
 
+[noreturn]
 fn no_value_where_required(option string) {
 	eprintln('no value found where one is required!')
 	eprintln('need to specify a value at option `$option`')
 	exit(1)
+}
+
+fn parse_settings() VigOptions {
+
+	mut option := VigOptions{}
+	setting := toml.parse(settings)
+
+	// check if lower
+	if setting.value('autosave-interval') <= 0 {
+		option.autosave_interval = 30
+	} else {
+		option.autosave_interval = setting.value('autosave-interval')
+	}
+
+	option.daemonize = setting.value('daemonize')
+
+	return option
+
 }

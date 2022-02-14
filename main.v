@@ -13,6 +13,7 @@ fn main() {
 	// game thread
 	for {
 		println('game')
-		time.sleep(options.autosave_interval*util.a_second)
+		util.file_structure()
+		time.sleep(options.autosave_interval * time.second)
 	}
 }
