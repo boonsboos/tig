@@ -100,19 +100,30 @@ fn no_value_where_required(option string) {
 	exit(1)
 }
 
+[noreturn]
+fn malformatted_settings() {
+	eprintln('could not load the settings file!')
+	eprintln('please check for typos')
+	exit(1)
+}
+
 fn parse_settings() VigOptions {
 
 	mut option := VigOptions{}
-	setting := toml.parse(settings)
 
-	// check if lower
-	if setting.value('autosave-interval') <= 0 {
-		option.autosave_interval = 30
-	} else {
-		option.autosave_interval = setting.value('autosave-interval')
+	// only run if we have a settings file
+	if os.exists(settings) {
+		setting := toml.parse(settings) or { malformatted_settings() }
+
+		// check if lower
+		if setting.value('autosave-interval').int() <= 0 {
+			option.autosave_interval = 30
+		} else {
+			option.autosave_interval = setting.value('autosave-interval').int()
+		}
+
+		option.daemonize = setting.value('daemonize').bool()
 	}
-
-	option.daemonize = setting.value('daemonize')
 
 	return option
 

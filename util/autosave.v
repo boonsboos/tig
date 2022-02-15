@@ -6,7 +6,7 @@ fn autosave_worker() {
 
 	println('autosaving...')
 
-	// do autosave stuff
+	save_file()
 
 	println('saved!')
 
