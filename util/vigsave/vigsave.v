@@ -23,3 +23,18 @@ pub fn (v VigsaveEncoder) encode_byte(b byte) {
 pub fn (v VigsaveEncoder) encode_int(i int) {
 	binary.little_endian_put_u32(v.data, u32(1))
 }
+
+pub struct VigsaveDecoder {
+mut:
+	data	[]byte
+	idx		int
+}
+
+pub fn (v VigsaveDecoder) decode_byte_arr() []byte {
+	v.idx++
+
+}
+
+pub fn (v VigsaveDecoder) decode_int() u32 {
+	
+}
