@@ -13,6 +13,9 @@ fn autosave_worker() {
 }
 
 pub fn autosave_thread() {
+
+	time.sleep(30 * time.second)
+
 	for {
 		autosave_worker()
 		time.sleep(options.autosave_interval * time.second)

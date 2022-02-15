@@ -13,6 +13,5 @@ fn main() {
 	go util.autosave_thread()
 
 	// game thread
-	println('game')
 	game.game()
 }

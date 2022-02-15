@@ -4,6 +4,8 @@ import math.big
 import term
 import time
 
+import util
+
 __global state GameState
 
 fn init() {
@@ -19,8 +21,9 @@ pub mut:
 pub fn game() {
 	// on startup, load info from save file
 	// still gotta decide on formatting of that file (prob smth proprietary)
-	
-	// 
+	util.load_save()
+
+	// start main game loop
 	for {
 		go tick()
 		time.sleep(time.second)
@@ -30,13 +33,17 @@ pub fn game() {
 fn tick() {
 
 	// clear the screen
-	term.clear()
+	//term.clear()
 	// update values
 	state.credits = state.credits + state.income
+	if state.credits % big.integer_from_int(25) == big.zero_int {
+		state.income.inc()
+	}
+
 	// draw info
 	println(state.credits.str())
 	println(state.income.str())
-	println(state.credits.bytes())
+
 	// await input (MAYBE THREAD THIS INTO A QUEUE)
 	handle_input()
 }

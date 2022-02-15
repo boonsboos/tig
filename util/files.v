@@ -4,7 +4,7 @@ import os
 
 pub const (
 	root_folder = os.executable().all_before_last('vig')
-	saves_folder = '${root_folder}saves/'
+	saves_folder = '${root_folder}saves'
 	settings = '${root_folder}settings.toml'
 )
 
@@ -16,11 +16,8 @@ daemonize=true'
 
 pub fn backup_file(file string) {
 	if os.exists('${file}.old') {
-		println('backup exists, removing')
 		os.rm('${file}.old') or { failed_to_write('${file}.old') }
-		println('removed backup')
 	}
-	println('backing up')
 	os.cp(file, '${file}.old') or { failed_to_backup(file) }
 }
 
