@@ -2,6 +2,9 @@ module util
 
 import os
 import time
+import math.big
+
+import vigsave
 
 const lastsave = '${saves_folder}lastsave'
 
@@ -17,16 +20,16 @@ fn save_file() {
 		os.create(save_path) or { failed_to_write(save_file_name) }
 	} 
 
+	mut encode := vigsave.VigsaveEncoder{}
 	mut save_file := os.open_append(save_path) or { failed_to_open(save_file_name) }
 
 	credit_bytes, _ := state.credits.bytes()
-	save_file.write_string('\'\'$credit_bytes\'\'') or { failed_to_write(save_file_name) }
-
-	// chance of 6 newlines next to each other should be small enough to not matter
-	save_file.write_string('\n') or { failed_to_write(save_file_name) }
+	encode.encode_byte_arr(credit_bytes)
 
 	income_bytes, _ := state.income.bytes()
-	save_file.write_string('\'\'$income_bytes\'\'') or { failed_to_write(save_file_name) }
+	encode.encode_byte_arr(income_bytes)
+
+	save_file.write(encode.finish()) or { failed_to_write(save_file_name) }
 
 	save_file.close()
 
@@ -38,11 +41,19 @@ fn save_file() {
 }
 
 pub fn load_save() {
+	// only run if there is a savefile present
+	// if the lastsave file is present, there has to be a save file
+	// could make this a symlink, perhaps? though not cross-platform
+	if !os.exists(lastsave) { return }
 
-	save_file_name := os.read_lines(lastsave) or { 
-		return
-	}
+	ic := big.IntegerConfig{}
 
-	save_file := os.read_lines('$saves_folder${save_file_name[0]}') or { failed_to_open(save_file_name[0]) }
+	mut decode := vigsave.VigsaveDecoder{}
+	save_file_name := os.read_lines(lastsave) or { failed_to_open('lastsave') }[0]
 
+	decode.data = os.read_bytes('$saves_folder$save_file_name') or { failed_to_open('$save_file_name') }
+
+	state.credits = big.integer_from_bytes(decode.decode_byte_arr(), ic)
+	
+	state.income  = big.integer_from_bytes(decode.decode_byte_arr(), ic)
 }

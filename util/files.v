@@ -4,7 +4,7 @@ import os
 
 pub const (
 	root_folder = os.executable().all_before_last('vig')
-	saves_folder = '${root_folder}saves'
+	saves_folder = '${root_folder}saves/'
 	settings = '${root_folder}settings.toml'
 )
 
