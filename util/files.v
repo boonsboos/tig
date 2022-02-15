@@ -20,8 +20,8 @@ pub fn backup_file(file string) {
 		os.rm('${file}.old') or { failed_to_write('${file}.old') }
 		println('removed backup')
 	}
-	println('moving file')
-	os.mv(file, '${file}.old') or { failed_to_backup('${file}') }
+	println('backing up')
+	os.cp(file, '${file}.old') or { failed_to_backup(file) }
 }
 
 pub fn file_structure() {

@@ -9,8 +9,6 @@ fn save_file() {
 	save_file_name := '${time_now}.vigsave'
 	save_path := '$saves_folder$save_file_name'
 
-	println(save_file_name)
-
 	if os.exists(save_path) {
 		backup_file(save_path)
 		println('backed up previous file')
@@ -22,7 +20,7 @@ fn save_file() {
 	credit_bytes, _ := state.credits.bytes()
 	save_file.write(credit_bytes) or { failed_to_write(save_file_name) }
 
-	save_file.write_string('\n') or { failed_to_write(save_file_name) }
+	save_file.write_string('\n\n') or { failed_to_write(save_file_name) }
 
 	income_bytes, _ := state.income.bytes()
 	save_file.write(income_bytes) or { failed_to_write(save_file_name) }
