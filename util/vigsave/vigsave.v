@@ -10,7 +10,7 @@ mut:
 const separator = ':'.bytes()[0]
 
 pub fn (mut v VigsaveEncoder) encode_byte_arr(arr []byte) {
-	v.data << ':'.bytes()
+	v.data << separator
 	mut tmp := []byte{len:4}
 	binary.big_endian_put_u32(mut tmp, u32(arr.len))
 	v.data << tmp
