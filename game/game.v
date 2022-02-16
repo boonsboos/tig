@@ -32,11 +32,11 @@ pub fn game() {
 	})
 
 	// start main game loop
-	//state.tui.run() or { panic(err) }
-	//state.tui.set_window_title('vig')
+	state.tui.run() or { panic(err) }
+	state.tui.set_window_title('vig')
 
 	// clear terminal after exiting
-	//term.clear()
+	term.clear()
 }
 
 fn tick(v voidptr) {
@@ -46,7 +46,7 @@ fn tick(v voidptr) {
 	mut screen := state.tui
 
 	// clear the screen
-	//screen.clear()
+	screen.clear()
 
 	// update values
 	state.credits = state.credits + (state.income)
@@ -54,10 +54,10 @@ fn tick(v voidptr) {
 
 	// draw info
 	screen.set_bg_color(ui.Color{100, 100, 100})
-	screen.draw_rect(2, 2, 8, 5)
+	screen.draw_rect(2, 2, 9, 5)
 	screen.draw_text(3, 3, format_number_string(state.credits))
 	screen.draw_text(3, 4, format_number_string(state.income))
 
-	// screen.reset()
-	// screen.flush()
+	screen.reset()
+	screen.flush()
 }
