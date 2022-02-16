@@ -64,6 +64,8 @@ fn parse_arg(arg string, mut options VigOptions) {
 			if value != '' { options.daemonize = value.bool() }
 		}
 
+		'r' { reset_saves() }
+
 		else { 
 			match parse_arg.trim_left('-') {
 				'help' { usage() }
@@ -80,6 +82,9 @@ fn parse_arg(arg string, mut options VigOptions) {
 					if value != '' { options.daemonize = value.bool() } 
 				}
 
+				'reset' {
+					reset_saves()
+				}
 				else {
 					eprintln('unrecognized option `-$parse_arg`')
 					exit(1)

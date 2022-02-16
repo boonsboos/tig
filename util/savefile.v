@@ -16,7 +16,6 @@ fn save_file() {
 
 	if os.exists(save_path) {
 		backup_file(save_path)
-		println('backed up previous file')
 		os.create(save_path) or { failed_to_write(save_file_name) }
 	} 
 
@@ -56,4 +55,11 @@ pub fn load_save() {
 	state.credits = big.integer_from_bytes(decode.decode_byte_arr(), ic)
 	
 	state.income  = big.integer_from_bytes(decode.decode_byte_arr(), ic)
+}
+
+fn reset_saves() {
+	folder := os.ls(saves_folder) or { return }
+	for i in folder {
+		os.rm(saves_folder+i) or { failed_to_write(i) }
+	}
 }
