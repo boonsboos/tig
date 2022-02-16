@@ -2,7 +2,7 @@ module game
 
 import math.big
 import term
-import time
+import term.ui
 
 import util
 
@@ -13,37 +13,51 @@ fn init() {
 }
 
 pub struct GameState {
+mut:
+	tui			ui.Context
 pub mut:
 	credits		big.Integer
-	income		big.Integer = big.one_int
+	income		big.Integer = big.two_int
 }
 
 pub fn game() {
-	// on startup, load info from save file
-	// still gotta decide on formatting of that file (prob smth proprietary)
+
 	util.load_save()
 
+	state.tui = ui.init(ui.Config{
+		event_fn: handle_input
+		frame_fn: tick
+		frame_rate: 2
+		hide_cursor: true
+	})
+
 	// start main game loop
-	for {
-		go tick()
-		time.sleep(time.second)
-	}
+	//state.tui.run() or { panic(err) }
+	//state.tui.set_window_title('vig')
+
+	// clear terminal after exiting
+	//term.clear()
 }
 
-fn tick() {
+fn tick(v voidptr) {
+
+	// note to self: the x is the horizontal axis
+
+	mut screen := state.tui
 
 	// clear the screen
-	//term.clear()
+	//screen.clear()
+
 	// update values
-	state.credits = state.credits + state.income
-	if state.credits % big.integer_from_int(25) == big.zero_int {
-		state.income.inc()
-	}
+	state.credits = state.credits + (state.income)
+	state.income.inc() 
 
 	// draw info
-	println(state.credits.str())
-	println(state.income.str())
+	screen.set_bg_color(ui.Color{100, 100, 100})
+	screen.draw_rect(2, 2, 8, 5)
+	screen.draw_text(3, 3, format_number_string(state.credits))
+	screen.draw_text(3, 4, format_number_string(state.income))
 
-	// await input (MAYBE THREAD THIS INTO A QUEUE)
-	handle_input()
+	// screen.reset()
+	// screen.flush()
 }
