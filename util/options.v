@@ -96,6 +96,7 @@ fn parse_arg(arg string, mut options VigOptions) {
 
 fn usage() {
 	println(help)
+	exit(0)
 }
 
 [noreturn]
