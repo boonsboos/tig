@@ -2,10 +2,18 @@ module game
 
 import math.big
 
-const magnitudes = ['', 'K', 'M', 'B', 'T', 'Qa', 'Qu', 'Sx', 'Sp', 'Oc', 'No', 'Dc', 'UDc', 'DDc']
+const magnitudes = ['',
+'K', 'M', 'B', 'T', 'Qa', 'Qu', 'Sx', 'Sp', 'Oc', 'No', 'Dc',
+'UDc', 'DDc', 'TDc', 'QtDc', 'QiDc', 'SxDc', 'SpDc', 'OcDc', 'NoDc',
+'Vg', 'UVg', 'DVg', 'TVg', 'QtVg', 'QiVg', 'SxVg', 'SpVg', 'OcVg', 'NoVg'
+'Tg', 'UTg', 'DTg', 'TTg', 'QtTg', 'QiTg', 'SxTg', 'SpTg', 'OcTg', 'NoTg']
 
 fn increment_credits() {
-	state.credits.inc()
+	state.credits = state.credits + (state.click_mult * big.one_int)
+}
+
+fn increment_income() {
+	//state.income.inc()
 }
 
 pub fn format_number_string(number big.Integer) string {

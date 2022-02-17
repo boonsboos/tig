@@ -1,23 +1,52 @@
-module graphics
+module game
 
 import term.ui
 
-const screen = state.tui
-
 // main draw call
 pub fn draw() {
-	
-	screen.clear()
 
-	screen.set_bg_color(ui.Color{100, 100, 100})
-	screen.draw_rect(2, 2, 9, 5)
-	screen.draw_text(3, 3, format_number_string(state.credits))
-	screen.draw_text(3, 4, format_number_string(state.income))
+	state.tui.clear()
 
-	screen.reset()
-	screen.flush()
+	draw_money()
+
+	state.tui.reset()
+	state.tui.flush()
 }
 
 fn draw_money() {
+	state.tui.set_bg_color(ui.Color{100, 100, 100})
 
+	draw_ascii_rectangle(2, 2, 19, 5)
+
+	draw_named_value('credits', format_number_string(state.credits), 3, 3)
+	draw_named_value('income', format_number_string(state.income), 3, 4)
+}
+
+fn draw_named_value(name string, value string, x int, y int) {
+	mut name_ := name
+	for name_.len < 7 {
+		name_ += ' '
+	}
+
+	mut value_ := value
+	for value_.len < 6 {
+		value_ += ' '
+	}
+
+	state.tui.draw_text(x, y, '[$name_] $value_')
+}
+
+fn draw_ascii_rectangle(x int, y int, x2 int, y2 int) {
+	// draw horizontal
+	for j in [y, y2] {
+		for i in x..x2+1 {
+			state.tui.draw_text(i, j, '=')
+		}
+	}
+
+	// draw vertical 
+	for i in y..y2 {
+		state.tui.draw_text(x, i, '=')
+		state.tui.draw_text(x2, i,'=')
+	}
 }

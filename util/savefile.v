@@ -28,6 +28,11 @@ fn save_file() {
 	income_bytes, _ := state.income.bytes()
 	encode.encode_byte_arr(income_bytes)
 
+	click_bytes, _ := state.click_mult.bytes()
+	encode.encode_byte_arr(click_bytes)
+
+	encode.encode_int_array(state.applied_ups)
+
 	save_file.write(encode.finish()) or { failed_to_write(save_file_name) }
 
 	save_file.close()
@@ -52,9 +57,10 @@ pub fn load_save() {
 
 	decode.data = os.read_bytes('$saves_folder$save_file_name') or { failed_to_open('$save_file_name') }
 
-	state.credits = big.integer_from_bytes(decode.decode_byte_arr(), ic)
-	
-	state.income  = big.integer_from_bytes(decode.decode_byte_arr(), ic)
+	state.credits    = big.integer_from_bytes(decode.decode_byte_arr(), ic)
+	state.income     = big.integer_from_bytes(decode.decode_byte_arr(), ic)
+	state.click_mult = big.integer_from_bytes(decode.decode_byte_arr(), ic)
+	state.applied_ups= decode.decode_int_array()
 }
 
 fn reset_saves() {

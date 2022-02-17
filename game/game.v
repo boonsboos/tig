@@ -18,6 +18,8 @@ mut:
 pub mut:
 	credits		big.Integer
 	income		big.Integer = big.two_int
+	click_mult	big.Integer = big.one_int
+	applied_ups []int // ids of applied upgrades
 }
 
 pub fn game() {
@@ -45,7 +47,7 @@ fn tick(v voidptr) {
 
 	// update values
 	state.credits = state.credits + (state.income)
-	state.income.inc() 
+	increment_income() 
 
 	// draw info
 	draw()
