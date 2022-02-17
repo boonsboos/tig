@@ -9,17 +9,21 @@ pub fn draw() {
 
 	draw_money()
 
+	draw_upgrades()
+
 	state.tui.reset()
 	state.tui.flush()
 }
 
 fn draw_money() {
-	state.tui.set_bg_color(ui.Color{100, 100, 100})
-
-	draw_ascii_rectangle(2, 2, 19, 5)
+	draw_default_ascii_rectangle(2, 2, 19, 5)
 
 	draw_named_value('credits', format_number_string(state.credits), 3, 3)
 	draw_named_value('income', format_number_string(state.income), 3, 4)
+}
+
+fn draw_upgrades() {
+	draw_default_ascii_rectangle(2, 7, 19, 15)
 }
 
 fn draw_named_value(name string, value string, x int, y int) {
@@ -36,7 +40,7 @@ fn draw_named_value(name string, value string, x int, y int) {
 	state.tui.draw_text(x, y, '[$name_] $value_')
 }
 
-fn draw_ascii_rectangle(x int, y int, x2 int, y2 int) {
+fn draw_default_ascii_rectangle(x int, y int, x2 int, y2 int) {
 	// draw horizontal
 	for j in [y, y2] {
 		for i in x..x2+1 {
@@ -46,7 +50,22 @@ fn draw_ascii_rectangle(x int, y int, x2 int, y2 int) {
 
 	// draw vertical 
 	for i in y..y2 {
-		state.tui.draw_text(x, i, '=')
-		state.tui.draw_text(x2, i,'=')
+		state.tui.draw_text(x,  i, '=')
+		state.tui.draw_text(x2, i, '=')
+	}
+}
+
+fn draw_ascii_rectangle(x int, y int, x2 int, y2 int, ch string) {
+	// draw horizontal
+	for j in [y, y2] {
+		for i in x..x2+1 {
+			state.tui.draw_text(i, j, ch)
+		}
+	}
+
+	// draw vertical 
+	for i in y..y2 {
+		state.tui.draw_text(x,  i, ch)
+		state.tui.draw_text(x2, i, ch)
 	}
 }

@@ -17,7 +17,7 @@ mut:
 	tui			ui.Context
 pub mut:
 	credits		big.Integer
-	income		big.Integer = big.two_int
+	income		big.Integer = big.one_int
 	click_mult	big.Integer = big.one_int
 	applied_ups []int // ids of applied upgrades
 }

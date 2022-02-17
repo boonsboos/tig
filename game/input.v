@@ -10,7 +10,8 @@ fn handle_input(event &ui.Event, hm voidptr) {
 		
 		match event.code {
 			.escape { exit(0) }
-			.enter  { increment_credits() }
+			.space  { increment_credits() }
+			.enter  { /* handle confirmations */ }
 			.u      { apply_upgrade(mut up) }
 			else {}
 		}
