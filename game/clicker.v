@@ -23,8 +23,10 @@ pub fn format_number_string(number big.Integer) string {
 		}
 
 		if nr.len % 3 == 0 {
-			return '${nr[0..3]}.${nr[3].ascii_str()}${magnitudes[nr.len/3]}'
-		}
+			return '${nr[0..3]}.${nr[3].ascii_str()}${magnitudes[(nr.len/3)-1]}'
+		} //celse if nr.len % 3 == 0 && f64(nr.len) / 3.0 == 2 {
+		// 	return '${nr[0..3]}.${nr[3].ascii_str()}${magnitudes[]}'
+		// }
 		
 	}
 
