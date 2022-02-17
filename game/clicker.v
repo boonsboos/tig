@@ -20,7 +20,7 @@ pub fn format_number_string(number big.Integer) string {
 
 	nr := number.str()
 
-	if nr.len > 3 {
+	if nr.len > 5 {
 
 		if nr.len % 3 == 1 {
 			return '${nr[0].ascii_str()}.${nr[1..4]}${magnitudes[nr.len/3]}'

@@ -1,7 +1,5 @@
 module game
 
-import term.ui
-
 // main draw call
 pub fn draw() {
 
@@ -11,61 +9,46 @@ pub fn draw() {
 
 	draw_upgrades()
 
+	draw_machines()
+
 	state.tui.reset()
 	state.tui.flush()
 }
 
 fn draw_money() {
-	draw_default_ascii_rectangle(2, 2, 19, 5)
+	draw_default_ascii_rectangle(2, 2, 25, 5)
 
 	draw_named_value('credits', format_number_string(state.credits), 3, 3)
 	draw_named_value('income', format_number_string(state.income), 3, 4)
 }
 
 fn draw_upgrades() {
-	draw_default_ascii_rectangle(2, 7, 19, 15)
-}
-
-fn draw_named_value(name string, value string, x int, y int) {
-	mut name_ := name
-	for name_.len < 7 {
-		name_ += ' '
+	if state.focused == .upgrades {
+		state.tui.set_bg_color(focused_color)
 	}
+	draw_default_ascii_rectangle(2, 6, 25, 29)
 
-	mut value_ := value
-	for value_.len < 6 {
-		value_ += ' '
-	}
+	state.tui.reset_bg_color() // we have to handle selection
+	// 23 chars wide
+	// 27 chars tall
+	for i := 7; i < 29; i +=2 {
+		if i-7 >= state.avail_ups.len || i-8 >= state.avail_ups.len {
+			break
+		}
 
-	state.tui.draw_text(x, y, '[$name_] $value_')
-}
-
-fn draw_default_ascii_rectangle(x int, y int, x2 int, y2 int) {
-	// draw horizontal
-	for j in [y, y2] {
-		for i in x..x2+1 {
-			state.tui.draw_text(i, j, '=')
+		if i-1 % 2 == 0 {
+			draw_upgrade(3, i, state.avail_ups[i-8])
+		} else {
+			draw_upgrade(3, i, state.avail_ups[i-7])
 		}
 	}
-
-	// draw vertical 
-	for i in y..y2 {
-		state.tui.draw_text(x,  i, '=')
-		state.tui.draw_text(x2, i, '=')
-	}
 }
 
-fn draw_ascii_rectangle(x int, y int, x2 int, y2 int, ch string) {
-	// draw horizontal
-	for j in [y, y2] {
-		for i in x..x2+1 {
-			state.tui.draw_text(i, j, ch)
-		}
+fn draw_machines() {
+	if state.focused == .machines {
+		state.tui.set_bg_color(focused_color)
 	}
+	draw_default_ascii_rectangle(30, 2, 55, 29)
 
-	// draw vertical 
-	for i in y..y2 {
-		state.tui.draw_text(x,  i, ch)
-		state.tui.draw_text(x2, i, ch)
-	}
+	state.tui.reset_bg_color()
 }

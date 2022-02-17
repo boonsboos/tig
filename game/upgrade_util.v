@@ -1,7 +1,5 @@
 module game
 
-import math.big
-
 const all_upgrades = [ Upgrade(No{}),
 	Upgrade(Click_100x{}), Upgrade(Income_10x{})
 ]
@@ -29,36 +27,20 @@ fn apply_upgrade(mut up Upgrade) bool {
 	return false
 }
 
-pub enum UpgradeType {
-	income
-	click
-	no
-}
+fn get_available_upgrades() []Upgrade {
 
-pub interface Upgrade {
-	id          int
-	price	    big.Integer
-	multiplier	big.Integer
-	up_type     UpgradeType
-}
+	mut tmp := []Upgrade{}
 
-pub struct No {
-	id          int
-	price       big.Integer = big.zero_int
-	multiplier  big.Integer = big.one_int
-	up_type     UpgradeType = .no
-}
+	for i in all_upgrades {
+		if i.id == 0 { continue }
 
-pub struct Click_100x {
-	id          int = 1
-	price		big.Integer = big.integer_from_int(1000)
-	multiplier	big.Integer = big.integer_from_int(100)
-	up_type		UpgradeType = .click
-}
+		if i.price.str().len <= state.credits.str().len + 3
+			|| !state.applied_ups.contains(i.id) {
+			
+			tmp << i
+		}
+	}
 
-pub struct Income_10x {
-	id          int = 2
-	price		big.Integer = big.integer_from_int(1_000_000)
-	multiplier	big.Integer = big.integer_from_int(10)
-	up_type		UpgradeType = .income
+	return tmp
+
 }

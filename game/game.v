@@ -15,11 +15,13 @@ fn init() {
 pub struct GameState {
 mut:
 	tui			ui.Context
+	focused     Focus
 pub mut:
 	credits		big.Integer
 	income		big.Integer = big.one_int
 	click_mult	big.Integer = big.one_int
 	applied_ups []int // ids of applied upgrades
+	avail_ups	[]Upgrade
 }
 
 pub fn game() {
@@ -47,8 +49,11 @@ fn tick(v voidptr) {
 
 	// update values
 	state.credits = state.credits + (state.income)
-	increment_income() 
+	
+	state.avail_ups << get_available_upgrades()
 
 	// draw info
 	draw()
+
+	state.avail_ups.clear()
 }
