@@ -11,7 +11,7 @@ build-linux:
 	v -prod $(FLAGS) -compress .
 
 test-linux:
-	v $(FLAGS) -compress .
+	v $(FLAGS) .
 
 gcc-linux:
 	v -cc gcc -prod $(FLAGS) -compress .

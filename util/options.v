@@ -119,7 +119,7 @@ fn parse_settings() VigOptions {
 
 	// only run if we have a settings file
 	if os.exists(settings) {
-		setting := toml.parse(settings) or { malformatted_settings() }
+		setting := toml.parse_file(settings) or { malformatted_settings() }
 
 		// check if lower
 		if setting.value('autosave-interval').int() <= 0 {

@@ -26,15 +26,15 @@ pub struct No {
 
 pub struct Click_100x {
 	id          int = 1
-	price		big.Integer = big.integer_from_int(1000)
-	multiplier	big.Integer = big.integer_from_int(100)
+	price		big.Integer = big.integer_from_int(100)
+	multiplier	big.Integer = big.integer_from_int(10)
 	up_type		UpgradeType = .click
-	describe    string = 'Click Powa x100'
+	describe    string = 'Click Powa x10'
 }
 
 pub struct Income_10x {
 	id          int = 2
-	price		big.Integer = big.integer_from_int(100)
+	price		big.Integer = big.integer_from_int(250)
 	multiplier	big.Integer = big.integer_from_int(10)
 	up_type		UpgradeType = .income
 	describe    string = 'Income x10'

@@ -1,8 +1,9 @@
 module game
 
+import gx
 import math.big
-import term
-import term.ui
+
+import vgui
 
 import util
 
@@ -13,47 +14,58 @@ fn init() {
 }
 
 pub struct GameState {
-mut:
-	tui			ui.Context
-	focused     Focus
 pub mut:
 	credits		big.Integer
 	income		big.Integer = big.one_int
 	click_mult	big.Integer = big.one_int
 	applied_ups []int // ids of applied upgrades
 	avail_ups	[]Upgrade
+	window		&vgui.Window = 0
 }
 
 pub fn game() {
 
 	util.load_save()
+	
+	params := vgui.WindowParams{ 100, 100, voidptr(0)}
 
-	state.tui = ui.init(ui.Config{
-		event_fn: handle_input
-		frame_fn: tick
-		frame_rate: 2
-		hide_cursor: true
-	})
+	state.window = vgui.create_window('vig', 400, 400, tick, params)
+	apply_styling(mut state.window)
 
-	// start main game loop
-	state.tui.run() or { panic(err) }
-	state.tui.set_window_title('vig')
-
-	// clear terminal after exiting
-	term.clear()
+	state.window.run()
 }
 
-fn tick(v voidptr) {
+fn apply_styling(mut window &vgui.Window) {
+	window.style.label.text.mono = true
+	window.style.label.text.color = gx.green
+	window.gg.set_bg_color(gx.Color{ 
+		byte(10), byte(10), byte(10), byte(0)
+	})
+}
 
-	// note to self: the x is the horizontal axis
+fn tick(mut window &vgui.Window) {
 
-	// update values
-	state.credits = state.credits + (state.income)
+	// update values every tick ~ every 30 frames
+	// TODO: refresh rate dependency
+	if window.gg.frame % u64(30) == 0 {
+		state.credits = state.credits + (state.income)
 	
-	state.avail_ups << get_available_upgrades()
+		state.avail_ups << get_available_upgrades()
+	}
 
 	// draw info
-	draw()
+	window.label('credits| ${format_number_string(state.credits)}', 10, 10)
+	window.label('income | ${format_number_string(state.income)}/t', 10, 20)
 
-	state.avail_ups.clear()
+	// draw upgrades
+	window.label('upgrades', 10, 40)
+	draw_upgrades(mut window)
+}
+
+fn draw_upgrades(mut window &vgui.Window) {
+	y := 50
+	for i, j in state.avail_ups {
+		if window.buttons[i].contains(j.describe) { continue }
+		window.button(j.describe, 10, y + (i * 20))
+	}
 }
