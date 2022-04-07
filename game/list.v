@@ -6,7 +6,7 @@ fn list(arg string) {
 			list_machines()
 		}
 		'u', 'upgrade' {
-			list_machines()
+			list_upgrades()
 		}
 		else { 
 			println('no list for `$arg`')
@@ -23,5 +23,6 @@ fn list_machines() {
 }
 
 fn list_upgrades() {
-
+	price := calc_ls_up(1)
+	println('lightwswitch (ls) | upgrade: ${format_number_string(price)}')
 }

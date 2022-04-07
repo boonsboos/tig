@@ -28,8 +28,6 @@ fn save_file() {
 	income_bytes, _ := state.income.bytes()
 	encode.encode_byte_arr(income_bytes)
 
-	encode.encode_int_array(state.applied_ups)
-
 	// encode lightswitches
 	encode.encode_int(1)
 	encode.encode_int(state.machines.ls.amount)
@@ -61,7 +59,6 @@ pub fn load_save() {
 
 	state.credits    = big.integer_from_bytes(decode.decode_byte_arr(), ic)
 	state.income     = big.integer_from_bytes(decode.decode_byte_arr(), ic)
-	state.applied_ups= decode.decode_int_array()
 
 	// decode lightswitches
 	if decode.decode_int() != 1 { dec_err() }

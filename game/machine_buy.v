@@ -30,10 +30,9 @@ fn buy_lightswitch(amount int) {
 	if (state.credits - price).signum == 1 {
 		income := ls_income * big.integer_from_int(mult * amount)
 		state.credits = state.credits - price
-		state.income = state.income + income
 		state.machines.ls.amount = eamount + amount
-		println('paid $price!')
-		println('income increased by $income')
+		println('paid ${format_number_string(price)}!')
+		println('income increased by ${format_number_string(income)}')
 	} else {
 		println('not enough credits! price: ${format_number_string(price)}')
 	}

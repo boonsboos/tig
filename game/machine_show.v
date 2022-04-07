@@ -20,7 +20,3 @@ fn display_ls() {
 	println('mult   | ${mult}')
 	println('generating $income_t/tick')
 }
-
-fn display_machines() {
-	display_ls()
-}

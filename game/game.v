@@ -17,8 +17,6 @@ pub struct GameState {
 pub mut:
 	credits		big.Integer
 	income		big.Integer = big.one_int
-	applied_ups []int // ids of applied upgrades
-	avail_ups	[]Upgrade
 	machines 	Machines
 }
 
@@ -52,7 +50,6 @@ fn ticker() {
 fn tick() {
 	// update values
 	state.credits = state.credits + (state.income)
-	state.avail_ups << get_available_upgrades()
 	term.set_terminal_title('tig | ${format_number_string(state.credits)}')
 
 }
@@ -82,13 +79,26 @@ fn process_input(command string) {
 		'clear', 'cls' {
 			term.clear()
 		}
+		'click' {
+			state.credits.inc() // there's the ol' clicker
+		}
 		'machine', 'm' {
 			if args.len > 2 {
 				process_buy(args[1], args[2].int())
 			} else if args.len == 2 {
 				display_info(args[1])
 			} else {
-				display_machines()
+				// just list
+				list('m')
+			}
+		}
+		'upgrade', 'u' {
+			if args.len > 2 {
+				upgrade(args[1], args[2].int())
+			} else if args.len == 2 {
+				display_info(args[1])
+			} else {
+
 			}
 		}
 		'list', 'l' {
@@ -105,14 +115,21 @@ fn process_input(command string) {
 }
 
 fn print_balance() {
+	calculate_income()
 	println('credits| ' + term.bright_green(
 			format_number_string(state.credits)
 		)
 	)
 	term.reset('')
+	
 	println('income | ' + term.bright_green(
 		format_number_string(state.income)
 	) + term.reset('/t') )
+}
+
+fn calculate_income() {
+	state.income = 
+	(big.integer_from_int(state.machines.ls.amount * state.machines.ls.mult) * ls_income)
 }
 
 enum Usage {
