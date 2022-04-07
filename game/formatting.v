@@ -8,10 +8,6 @@ const magnitudes = ['',
 'Vg', 'UVg', 'DVg', 'TVg', 'QtVg', 'QiVg', 'SxVg', 'SpVg', 'OcVg', 'NoVg'
 'Tg', 'UTg', 'DTg', 'TTg', 'QtTg', 'QiTg', 'SxTg', 'SpTg', 'OcTg', 'NoTg']
 
-fn increment_income() {
-	//state.income.inc()
-}
-
 pub fn format_number_string(number big.Integer) string {
 
 	nr := number.str()

@@ -58,8 +58,7 @@ fn tick() {
 }
 
 fn splash() {
-println('
- _   _      _
+println(' _   _      _
 | |_(_)__ _| |
 |  _| / _` |_|
  \\__|_\\__, (_)
@@ -71,44 +70,70 @@ fn process_input(command string) {
 	mut args := command.all_before('\n').split(' ')
 	
 	match args[0] {
-		'' {
-			return
-		}
 		'help', 'h' {
-			println('refer to the tig wiki for all commands!')
-			println('exit (stop, quit) - quits without saving')
-			println('bal (b) - shows balance')
+			usage(.help)
 		}
 		'exit', 'stop', 'quit' {
 			exit(0)
 		}
 		'bal', 'balance', 'b' {
-			println('credits| ' + term.bright_green(
-					format_number_string(state.credits)
-				)
-			)
-			term.reset('')
-			println('income | ' + term.bright_green(
-				format_number_string(state.income)
-			) + term.reset('/t') )
+			print_balance()
 		}
 		'clear', 'cls' {
 			term.clear()
 		}
 		'machine', 'm' {
-			println(args.len)
 			if args.len > 2 {
-				println(args)
 				process_buy(args[1], args[2].int())
 			} else if args.len == 2 {
-				// list info for that machine
+				display_info(args[1])
 			} else {
-				// list info for all machines
+				display_machines()
+			}
+		}
+		'list', 'l' {
+			if args.len < 2 {
+				usage(.list)
+			} else {
+				list(args[1])
 			}
 		}
 		else {
-			term.clear()
 			println(term.bright_red('unknown command: `${args[0]}`'))
+		}
+	}
+}
+
+fn print_balance() {
+	println('credits| ' + term.bright_green(
+			format_number_string(state.credits)
+		)
+	)
+	term.reset('')
+	println('income | ' + term.bright_green(
+		format_number_string(state.income)
+	) + term.reset('/t') )
+}
+
+enum Usage {
+	help
+	list
+}
+
+fn usage(typ Usage) {
+	match typ { 
+		.help {
+			println('there will be a builtin tutorial in the future
+for now, refer to the wiki
+https://github.com/mrsherobrine/tig/wiki/Tutorial')
+			return
+		}
+		.list {
+			println('the list command accepts many arguments')
+			println('use it as such: `ls [arg]` or `list [arg]`')
+			println('a list of accepted arguments:')
+			println('- machine (m)')
+			println('- upgrade (u)')
 		}
 	}
 }
