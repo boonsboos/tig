@@ -8,10 +8,6 @@ const magnitudes = ['',
 'Vg', 'UVg', 'DVg', 'TVg', 'QtVg', 'QiVg', 'SxVg', 'SpVg', 'OcVg', 'NoVg'
 'Tg', 'UTg', 'DTg', 'TTg', 'QtTg', 'QiTg', 'SxTg', 'SpTg', 'OcTg', 'NoTg']
 
-fn increment_credits() {
-	state.credits = state.credits + (state.click_mult * big.one_int)
-}
-
 fn increment_income() {
 	//state.income.inc()
 }

@@ -1,5 +1,5 @@
 *.exe
-vig
+tig
 vls.log
-saves
+tigsaves
 *.toml

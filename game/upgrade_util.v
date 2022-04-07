@@ -16,7 +16,6 @@ fn apply_upgrade(mut up Upgrade) bool {
 	if (state.credits - up.price).signum == 1  && !is_applied(up.id) {
 		match up.up_type {
 			.income { state.income     = state.income     * up.multiplier }
-			.click  { state.click_mult = state.click_mult * up.multiplier }
 			else    { /*no op*/ }
 		}
 		state.credits = state.credits - up.price
