@@ -101,6 +101,19 @@ fn process_input(command string) {
 
 			}
 		}
+		// this nukes saves
+		'nuuuuuuuuuke' {
+			if args.len == 4 {
+				if args[1] == 'yes' {
+					if args[2] == 'ples' {
+						if args[3] == 'tig-kun' {
+							util.reset_saves()
+							exit(0)
+						}
+					}
+				}
+			}
+		}
 		'list', 'l' {
 			if args.len < 2 {
 				usage(.list)

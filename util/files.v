@@ -3,16 +3,14 @@ module util
 import os 
 
 pub const (
-	root_folder = os.executable().all_before_last('vig')
-	saves_folder = '${root_folder}saves/'
-	settings = '${root_folder}settings.toml'
+	root_folder = os.executable().all_before_last('tig')
+	saves_folder = '${root_folder}tigsaves/'
+	settings = '${root_folder}tigsettings.toml'
 )
 
-const settings_content = '# main settings file for vig
+const settings_content = '# main settings file for tig
 # time between saves in seconds
-autosave-interval=30
-# should the game run in the background as a daemon?
-daemonize=true'
+autosave-interval=30'
 
 pub fn backup_file(file string) {
 	if os.exists('${file}.old') {

@@ -71,7 +71,7 @@ fn dec_err() {
 	panic('malformed save file!')
 }
 
-fn reset_saves() {
+pub fn reset_saves() {
 	folder := os.ls(saves_folder) or { return }
 	for i in folder {
 		os.rm(saves_folder+i) or { failed_to_write(i) }

@@ -13,13 +13,11 @@ VIG [option](=value)
 
 	-h(elp)                  | shows this message
 	-a(utosave-interval)=int | set autosave interval in seconds - default: 30
-	-d(aemonize)=bool        | should the game daemonize? - default: true
 '
 
 pub struct VigOptions {
 pub mut:
 	autosave_interval	int = 30
-	daemonize           bool = true
 }
 
 fn init() {
@@ -60,10 +58,6 @@ fn parse_arg(arg string, mut options VigOptions) {
 			else { options.autosave_interval = value.int() }
 		}
 
-		'd' { 
-			if value != '' { options.daemonize = value.bool() }
-		}
-
 		'r' { reset_saves() }
 
 		else { 
@@ -77,11 +71,6 @@ fn parse_arg(arg string, mut options VigOptions) {
 						else { options.autosave_interval = value.int() }
 					}
 				}
-
-				'daemonize' { 
-					if value != '' { options.daemonize = value.bool() } 
-				}
-
 				'reset' {
 					reset_saves()
 				}
