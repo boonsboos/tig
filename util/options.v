@@ -111,13 +111,11 @@ fn parse_settings() VigOptions {
 		setting := toml.parse_file(settings) or { malformatted_settings() }
 
 		// check if lower
-		if setting.value('autosave-interval').int() <= 0 {
+		if setting.value('autosave-interval').int() <= 30 {
 			option.autosave_interval = 30
 		} else {
 			option.autosave_interval = setting.value('autosave-interval').int()
 		}
-
-		option.daemonize = setting.value('daemonize').bool()
 	}
 
 	return option

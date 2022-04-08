@@ -19,7 +19,7 @@ fn calc_ls_up(amount int) big.Integer {
 
 fn upgrade_ls(amount int) {
 	price := calc_ls_up(amount)
-	if (state.credits - price).signum == 1 {
+	if (state.credits - price).signum >= 0 {
 		state.credits = state.credits - price
 		state.machines.ls.mult += amount
 		println('paid ${format_number_string(price)}!')

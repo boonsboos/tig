@@ -98,11 +98,12 @@ fn process_input(command string) {
 			} else if args.len == 2 {
 				display_info(args[1])
 			} else {
-
+				list('u')
 			}
 		}
 		// this nukes saves
 		'nuuuuuuuuuke' {
+			println(args)
 			if args.len == 4 {
 				if args[1] == 'yes' {
 					if args[2] == 'ples' {
